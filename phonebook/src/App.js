@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import Filter from './Filter';
+import PersonForm from './PersonForm';
+import Persons from './Persons';
 
 const data = [
   { name: 'Arto Hellas', number: '040-123456', id: 1 },
@@ -48,35 +51,17 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      filter shown with:{' '}
-      <input onChange={(event) => setFilter(event.target.value)} type='text' />
-      <h2>add a new</h2>
-      <form>
-        <div>
-          name:{' '}
-          <input
-            value={newName}
-            type='text'
-            onChange={(event) => setNewName(event.target.value)}
-          />
-          <br />
-          number:{' '}
-          <input
-            value={newNumber}
-            type='text'
-            onChange={(event) => setNewNumber(event.target.value)}
-          />
-        </div>
-        <div>
-          <button onClick={(event) => handleAdd(event)} type='submit'>
-            add
-          </button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      {persons.map((person) => {
-        return <p key={person.id}>{person.name + ' ' + person.number}</p>;
-      })}
+      <Filter setFilter={setFilter} />
+      <h3>add a new</h3>
+      <PersonForm
+        newName={newName}
+        setNewName={setNewName}
+        newNumber={newNumber}
+        setNewNumber={setNewNumber}
+        handleAdd={handleAdd}
+      />
+      <h3>Numbers</h3>
+      <Persons persons={persons} />
     </div>
   );
 };
