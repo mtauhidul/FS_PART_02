@@ -1,20 +1,22 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Filter from './Filter';
 import PersonForm from './PersonForm';
 import Persons from './Persons';
 
-const data = [
-  { name: 'Arto Hellas', number: '040-123456', id: 1 },
-  { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-  { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-  { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 },
-];
-
 const App = () => {
-  const [persons, setPersons] = useState(data);
+  const [data, setData] = useState([]);
+  const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [filter, setFilter] = useState('');
+
+  useEffect(() => {
+    axios.get('http://localhost:3001/persons').then((response) => {
+      setPersons(response.data);
+      setData(response.data);
+    });
+  }, []);
 
   useEffect(() => {
     const filteredData = persons.filter((p) =>
@@ -24,7 +26,7 @@ const App = () => {
     if (filter === '') {
       setPersons(data);
     }
-  }, [filter, persons]);
+  }, [filter]);
 
   const handleAdd = (event) => {
     event.preventDefault();
