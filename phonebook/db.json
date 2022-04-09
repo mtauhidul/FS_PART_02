@@ -2,13 +2,8 @@
   "persons": [
     {
       "name": "Arto Hellas",
-      "number": "535-645354",
+      "number": "664-5463533",
       "id": 1
-    },
-    {
-      "name": "Tim Kook",
-      "number": "324-3425252",
-      "id": 2
     }
   ]
 }

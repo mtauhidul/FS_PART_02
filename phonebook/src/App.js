@@ -8,6 +8,8 @@ const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
+  const [success, setSuccess] = useState(null);
+  const [error, setError] = useState(null);
 
   const getAllPersons = () => {
     services.getAllPersons().then((initialPersons) => {
@@ -46,9 +48,23 @@ const App = () => {
             const updatedPersons = persons.filter(
               (p) => p.name !== person.name
             );
+
             setPersons([...updatedPersons, returnedPerson]);
             setNewName('');
             setNewNumber('');
+            setSuccess(`Updated ${returnedPerson.name}`);
+            setTimeout(() => {
+              setSuccess(null);
+            }, 5000);
+          })
+          .catch((error) => {
+            setError(
+              `Information of ${person.name} has already been removed from server`
+            );
+            setTimeout(() => {
+              setError(null);
+            }, 5000);
+            setPersons(persons.filter((p) => p.id !== person.id));
           });
       }
     } else {
@@ -56,6 +72,10 @@ const App = () => {
         setPersons([...persons, returnedPerson]);
         setNewName('');
         setNewNumber('');
+        setSuccess(`Added ${returnedPerson.name}`);
+        setTimeout(() => {
+          setSuccess('');
+        }, 5000);
       });
     }
   };
@@ -74,7 +94,9 @@ const App = () => {
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
+      {success && <p className='success'>{success}</p>}
+      {error && <p className='error'>{error}</p>}
       <Filter setFilter={filterPersons} />
       <h3>add a new</h3>
       <PersonForm
