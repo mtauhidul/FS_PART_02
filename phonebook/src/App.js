@@ -14,6 +14,7 @@ const App = () => {
   const getAllPersons = () => {
     services.getAllPersons().then((initialPersons) => {
       setPersons(initialPersons);
+      console.log(initialPersons);
     });
   };
 
