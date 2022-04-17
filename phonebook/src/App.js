@@ -14,7 +14,6 @@ const App = () => {
   const getAllPersons = () => {
     services.getAllPersons().then((initialPersons) => {
       setPersons(initialPersons);
-      console.log(initialPersons);
     });
   };
 
@@ -69,15 +68,23 @@ const App = () => {
           });
       }
     } else {
-      services.addPerson(newPersonObj).then((returnedPerson) => {
-        setPersons([...persons, returnedPerson]);
-        setNewName('');
-        setNewNumber('');
-        setSuccess(`Added ${returnedPerson.name}`);
-        setTimeout(() => {
-          setSuccess('');
-        }, 5000);
-      });
+      services
+        .addPerson(newPersonObj)
+        .then((returnedPerson) => {
+          setPersons([...persons, returnedPerson]);
+          setNewName('');
+          setNewNumber('');
+          setSuccess(`Added ${returnedPerson.name}`);
+          setTimeout(() => {
+            setSuccess('');
+          }, 5000);
+        })
+        .catch((error) => {
+          setError('Phone number not valid');
+          setTimeout(() => {
+            setError(null);
+          }, 5000);
+        });
     }
   };
 
